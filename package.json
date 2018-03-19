@@ -17,5 +17,8 @@
     "react-native-forms": "^1.0.1",
     "react-native-modal": "^4.1.1",
     "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "prettier": "1.11.1"
   }
 }
