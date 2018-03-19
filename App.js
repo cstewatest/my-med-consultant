@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TouchableOpacity, StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import { store, actionTypes, stages, stagesKeys, prompts } from './src/reducers/unjaniRedux'
 
@@ -9,11 +9,16 @@ import PersonalDataForm from './src/components/PersonalDataForm'
 import CheckboxForm from './src/components/CheckboxForm'
 import List from './src/components/List'
 import Breadcrumbs from './src/components/Breadcrumbs'
+import Navigation from './src/components/Navigation'
+import Image from './src/components/Image'
 
 import { Font } from 'expo';
 
 export default class App extends React.Component {
-  state = {fontsAreLoaded: false}  
+  constructor(props) {
+    super(props)
+    this.state = { fontsAreLoaded: false }  
+  }
 
   async componentWillMount() {
     await Font.loadAsync({
@@ -53,7 +58,7 @@ export default class App extends React.Component {
   getCheckboxFormOptions() {
     const {stage} = this.state
    
-    return (this.state.medicalInfo[stage].potential)
+    return (this.state.medicalInfo[stage] && this.state.medicalInfo[stage].potential)
   }
 
   onBreadcrumbSelection = (stage) => {
@@ -72,50 +77,38 @@ export default class App extends React.Component {
   }
 
   render() {
-    let mainComponent = <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff"  animating={true} />;
-    let medicalInfoComponent;
-    let navComponent;
-    let containerComponent;
-
-    if (this.state.fontsAreLoaded) {
-      navComponent = <Text style={styles.title}> UNJANI </Text>
-      if (!this.state.isFetching) {
-        if (this.state.stage == stages.PERSONAL_DATA) {
-          mainComponent = 
-            <PersonalDataForm
-              onFormSubmit={this.onPersonalDataChange}
-            />
-        } else if (this.state.isFetching) {
-          mainComponent = <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} />
-        } else {
-           medicalInfoComponent = <Breadcrumbs itemObjs={this.getExistingMedicalInfo()} onItemSelection={this.onBreadcrumbSelection} />
-          if (this.state.stage == stages.DIAGNOSES) {
-            mainComponent = <List prompt={this.getPrompt()} items={this.getCheckboxFormOptions()} />
-          }
-          else {
-            mainComponent = <CheckboxForm onFormSubmit={this.onSelectOptions} validateOneOption={this.checkValidateOneOption()}  prompt={this.getPrompt()} allOptions={this.getCheckboxFormOptions()} />;
-          }
+    const {stage, isFetching} = this.state
+    let medicalInfoComponent = <Breadcrumbs itemObjs={this.getExistingMedicalInfo()} onItemSelection={this.onBreadcrumbSelection} />
+    let mainComponent = 
+      switch(stage) {
+        case stages.PERSONAL_DATA: {
+          return <PersonalDataForm onFormSubmit={this.onPersonalDataChange} />
+        }
+        case stages.DIAGNOSIS: {
+          return [medicalInfoComponent, <List prompt={this.getPrompt()} items={this.getCheckboxFormOptions()} />]
+        }
+        default: {
+          return [medicalInfoComponent, <CheckboxForm onFormSubmit={this.onSelectOptions} validateOneOption={this.checkValidateOneOption()}  prompt={this.getPrompt()} allOptions={this.getCheckboxFormOptions()} />]
         }
       }
-      containerComponent = (
-        <View style={styles.container}>
-          {navComponent}
-          <Image style={styles.image} source={require('./assets/images/doctor.jpg')} />
-          {medicalInfoComponent}
-          {mainComponent}
+
+    if (!this.state.fontsAreLoaded) {
+      return (
+        <View>
+          <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} />
         </View>
       )
-    } else {
-      containerComponent =  (
-        <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} /> 
-      ) 
-    }   
+    }
 
     return (
       <View style={styles.container}>
-        {containerComponent}
+        <Navigation />
+        <Image />
+        { 
+          this.state.isFetching ? <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} /> : mainComponent
+        }
       </View>
-    );
+    )
   }
 }
 
@@ -123,23 +116,8 @@ const styles = StyleSheet.create({
   activityIndicator: {
     marginTop: 50
   },
-  image: {
-    resizeMode: 'cover',
-    width: 400
-  },
-  title: {
-    fontWeight: 'bold',
-    color: 'white',
-    padding: 20,
-    paddingTop: 50,
-    textAlign: 'center',
-    fontFamily: 'open-sans-bold'
-  },
   container: {
     flex: 1,
     backgroundColor: '#1e90ff'
-  },
-  enteredPersonalData: {
-    fontFamily: 'open-sans-bold' 
   }
 });
