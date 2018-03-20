@@ -8,9 +8,9 @@ import Requester from './src/services/Requester'
 import PersonalDataForm from './src/components/PersonalDataForm'
 import CheckboxForm from './src/components/CheckboxForm'
 import List from './src/components/List'
-import Breadcrumbs from './src/components/Breadcrumbs'
 import Navigation from './src/components/Navigation'
-import Image from './src/components/Image'
+import MainImage from './src/components/MainImage'
+import MedicalInfo from './src/components/MedicalInfo'
 
 import { Font } from 'expo';
 
@@ -27,7 +27,7 @@ export default class App extends React.Component {
     });
 
     this.setState({...store.getState(), fontsAreLoaded: true});
-  
+ 
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
@@ -77,22 +77,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const {stage, isFetching} = this.state
-    let medicalInfoComponent = <Breadcrumbs itemObjs={this.getExistingMedicalInfo()} onItemSelection={this.onBreadcrumbSelection} />
-    let mainComponent = 
-      switch(stage) {
-        case stages.PERSONAL_DATA: {
-          return <PersonalDataForm onFormSubmit={this.onPersonalDataChange} />
-        }
-        case stages.DIAGNOSIS: {
-          return [medicalInfoComponent, <List prompt={this.getPrompt()} items={this.getCheckboxFormOptions()} />]
-        }
-        default: {
-          return [medicalInfoComponent, <CheckboxForm onFormSubmit={this.onSelectOptions} validateOneOption={this.checkValidateOneOption()}  prompt={this.getPrompt()} allOptions={this.getCheckboxFormOptions()} />]
-        }
-      }
+    const {stage, isFetching, fontsAreLoaded} = this.state
 
-    if (!this.state.fontsAreLoaded) {
+    if (!fontsAreLoaded) {
       return (
         <View>
           <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} />
@@ -100,12 +87,22 @@ export default class App extends React.Component {
       )
     }
 
+    let mainComponent;   
+    if (stage == stages.PERSONAL_DATA) {
+      mainComponent = <PersonalDataForm onFormSubmit={this.onPersonalDataChange} />
+    } else if (stage == stages.DIAGNOSIS) {
+      mainComponent = <List prompt={this.getPrompt()} items={this.getCheckboxFormOptions()} />
+    } else {
+      mainComponent = <CheckboxForm onFormSubmit={this.onSelectOptions} validateOneOption={this.checkValidateOneOption()}  prompt={this.getPrompt()} allOptions={this.getCheckboxFormOptions()} />
+    }
+
     return (
       <View style={styles.container}>
         <Navigation />
-        <Image />
+        <MainImage />
+        <MedicalInfo isFetching={isFetching} hasSubmittedMedicalInfo={!(stage == stages.PERSONAL_DATA || stage == stages.BODY_LOCATION)} itemObjs={this.getExistingMedicalInfo()} onItemSelection={this.onBreadcrumbSelection} />
         { 
-          this.state.isFetching ? <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} /> : mainComponent
+          isFetching ? <ActivityIndicator style={styles.activityIndicator} size="large" color="#ffffff" animating={true} /> : mainComponent
         }
       </View>
     )
