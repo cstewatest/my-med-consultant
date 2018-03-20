@@ -1,20 +1,20 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-export default class Breadcrumb extends React.Component {
-  handleSelection = () => {
-    const { onSelection, identifier } = this.props;
+const Breadcrumb = (props) => {
+  const handleSelection = () => {
+    const { onSelection, identifier } = props;
     onSelection(identifier);
   };
 
-  render() {
-    return (
-      <TouchableOpacity onPress={this.handleSelection}>
-        <Text style={styles.breadcrumb}>{this.props.item} </Text>
-      </TouchableOpacity>
-    );
-  }
+  return (
+    <TouchableOpacity onPress={handleSelection}>
+      <Text style={styles.breadcrumb}>{props.item} </Text>
+    </TouchableOpacity>
+  );
 }
+
+export default Breadcrumb
 
 const styles = {
   breadcrumb: {

@@ -3,7 +3,11 @@ import { FlatList, Text, StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default class List extends React.Component {
-  state = { formattedItems: [] };
+  constructor(props) {
+    super(props)
+
+    this.state = { formattedItems: [] };
+  }
 
   componentWillMount() {
     const { items } = this.props;
