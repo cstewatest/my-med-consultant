@@ -8,10 +8,9 @@ import {
 } from "react-native";
 import styles from "../constants/FormStyles";
 import t from "tcomb-form-native";
+import _ from "lodash";
 
 const Form = t.form.Form;
-
-let _ = require("lodash");
 
 const checkboxStylesheet = _.cloneDeep(Form.stylesheet);
 
@@ -20,12 +19,16 @@ checkboxStylesheet.formGroup.normal.flexDirection = "row";
 checkboxStylesheet.formGroup.normal.justifyContent = "space-between";
 
 export default class CheckboxForm extends React.Component {
-  state = { error: "" };
+  constructor(props) {
+    super(props)
+
+    this.state = { error: "" }
+  }
 
   onFormSubmit = () => {
     const { allOptions, onFormSubmit, validateOneOption, prompt } = this.props;
     const formData = this._form.getValue();
-    let selectedIDs = Object.keys(formData).filter(
+    const selectedIDs = Object.keys(formData).filter(
       key => formData[key] == true
     );
     if (validateOneOption && selectedIDs.length > 1) {
@@ -33,7 +36,7 @@ export default class CheckboxForm extends React.Component {
     } else if (selectedIDs.length < 1) {
       this.setState({ error: "Please make at least one selection." });
     } else {
-      let formattedIDs = selectedIDs.map(key => parseInt(key));
+      const formattedIDs = selectedIDs.map(key => parseInt(key));
       onFormSubmit(formattedIDs);
     }
   };
@@ -56,7 +59,7 @@ export default class CheckboxForm extends React.Component {
       customizeOptions["fields"][obj.ID] = { label: obj.Name };
     });
 
-    let symptomsForForm = t.struct(symptomsByID);
+    const symptomsForForm = t.struct(symptomsByID);
 
     return (
       <ScrollView style={styles.container}>

@@ -3,11 +3,11 @@ import t from "tcomb-form-native";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import styles from "../constants/FormStyles";
 
-let Gender = t.enums.of(["male", "female"]);
+const Gender = t.enums.of(["male", "female"]);
 
 const startingBirthYear = 1920;
 
-let birthYears = t.enums.of(
+const birthYears = t.enums.of(
   Array.from(new Array(100), (v, i) => (i + startingBirthYear).toString())
 );
 
@@ -28,7 +28,7 @@ Form.stylesheet.controlLabel.normal.color = "#ffffff";
 Form.stylesheet.pickerContainer.normal.backgroundColor = "#ffffff";
 Form.stylesheet.select.normal.backgroundColor = "#ffffff";
 
-var options = {
+let options = {
   fields: {
     birthYear: {
       nullOption: false,
