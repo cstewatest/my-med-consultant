@@ -11,7 +11,7 @@ export default Navigation
 const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
-    color: 'white',
+    color: '#ffffff',
     padding: 20,
     paddingTop: 50,
     textAlign: 'center',

@@ -42,7 +42,7 @@ const DEFAULT_MEDICAL_INFO = {
 
 export const prompts = {
   BODY_LOCATION: "Which part of your body hurts?",
-  BODY_SUBLOCATION: "Specifially, which of these body parts hurts?",
+  BODY_SUBLOCATION: "Specifically, which of these body parts hurt?",
   SUBLOCATION_SYMPTOMS: "Which of these symptoms are you having?",
   ADDITIONAL_SYMPTOMS: "Are you having any additional symptoms?",
   DIAGNOSES: "POTENTIAL DIAGNOSES"

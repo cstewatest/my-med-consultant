@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 2
   },
   icon: {
-    color: "white",
+    color: "#ffffff",
     alignSelf: "center",
     marginTop: 10,
     fontSize: 30

@@ -2,7 +2,7 @@ import React from "react";
 import Breadcrumbs from './Breadcrumbs'
 
 const MedicalInfo = (props) => {
-  if (props.isFething || !props.hasSubmittedMedicalInfo) {
+  if (props.isFetching || !props.hasSubmittedMedicalInfo) {
     return null;
   }
 
