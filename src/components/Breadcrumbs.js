@@ -3,7 +3,7 @@ import { FlatList, Text, StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Breadcrumb from "./Breadcrumb";
 
-const Breadcrumbs = (props) => {
+const Breadcrumbs = props => {
   const renderItem = (itemObj, index) => {
     const { onItemSelection } = props;
     let icon;
@@ -32,9 +32,9 @@ const Breadcrumbs = (props) => {
   return (
     <View style={styles.breadcrumbs}>{props.itemObjs.map(renderItem)}</View>
   );
-}
+};
 
-export default Breadcrumbs
+export default Breadcrumbs;
 
 const styles = {
   breadcrumbGroup: {

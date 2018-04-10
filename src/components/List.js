@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 export default class List extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = { formattedItems: [] };
   }

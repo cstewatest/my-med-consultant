@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const Breadcrumb = (props) => {
+const Breadcrumb = props => {
   const handleSelection = () => {
     const { onSelection, identifier } = props;
     onSelection(identifier);
@@ -12,9 +12,9 @@ const Breadcrumb = (props) => {
       <Text style={styles.breadcrumb}>{props.item} </Text>
     </TouchableOpacity>
   );
-}
+};
 
-export default Breadcrumb
+export default Breadcrumb;
 
 const styles = {
   breadcrumb: {

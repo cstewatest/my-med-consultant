@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from "react-native";
 
-const Navigation = (props) => {
-  return <Text style={styles.title}> UNJANI </Text>
-}
+const Navigation = props => {
+  return <Text style={styles.title}> UNJANI </Text>;
+};
 
-export default Navigation
+export default Navigation;
 
 const styles = StyleSheet.create({
   title: {
-    fontWeight: 'bold',
-    color: '#ffffff',
+    fontWeight: "bold",
+    color: "#ffffff",
     padding: 20,
     paddingTop: 50,
-    textAlign: 'center',
-    fontFamily: 'open-sans-bold'
+    textAlign: "center",
+    fontFamily: "open-sans-bold"
   }
-})
+});

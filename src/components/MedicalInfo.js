@@ -1,14 +1,17 @@
 import React from "react";
-import Breadcrumbs from './Breadcrumbs'
+import Breadcrumbs from "./Breadcrumbs";
 
-const MedicalInfo = (props) => {
+const MedicalInfo = props => {
   if (props.isFetching || !props.hasSubmittedMedicalInfo) {
     return null;
   }
 
   return (
-    <Breadcrumbs itemObjs={props.itemObjs} onItemSelection={props.onItemSelection} />
+    <Breadcrumbs
+      itemObjs={props.itemObjs}
+      onItemSelection={props.onItemSelection}
+    />
   );
-}
+};
 
-export default MedicalInfo
+export default MedicalInfo;

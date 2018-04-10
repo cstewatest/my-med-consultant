@@ -20,9 +20,9 @@ checkboxStylesheet.formGroup.normal.justifyContent = "space-between";
 
 export default class CheckboxForm extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = { error: "" }
+    this.state = { error: "" };
   }
 
   onFormSubmit = () => {
