@@ -129,7 +129,7 @@ export default class App extends React.Component {
     } else if (stage == stages.REQUEST_FAILED) {
       mainComponent = (
         <View>
-          <Text> We're sorry. Something went wrong. Please try again later. </Text>
+          <Text style={styles.error}> We're sorry. Something went wrong. Please try again later. </Text>
         </View>
       );
     } else if (stage == stages.DIAGNOSIS) {
