@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   View,
+  Text,
   ActivityIndicator
 } from "react-native";
 
@@ -125,6 +126,12 @@ export default class App extends React.Component {
       mainComponent = (
         <PersonalDataForm onFormSubmit={this.onPersonalDataChange} />
       );
+    } else if (stage == stages.REQUEST_FAILED) {
+      mainComponent = (
+        <View>
+          <Text> We're sorry. Something went wrong. Please try again later. </Text>
+        </View>
+      );
     } else if (stage == stages.DIAGNOSIS) {
       mainComponent = (
         <List prompt={this.getPrompt()} items={this.getCheckboxFormOptions()} />
@@ -174,5 +181,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1e90ff"
-  }
+  },
+  error: {
+    fontFamily: "open-sans-bold",
+    paddingBottom: 10,
+    color: "#cc0000",
+    fontSize: 20
+  },
 });

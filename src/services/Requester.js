@@ -122,6 +122,9 @@ export default class Requester {
           payload: { potential: eval(result) }
         });
       } else {
+        store.dispatch({
+          type: actionTypes.REQUEST_FAILED
+        });
         console.log(request.status);
         console.log(request.response);
       }

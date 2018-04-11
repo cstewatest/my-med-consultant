@@ -52,6 +52,7 @@ export const actionTypes = {
   PERSONAL_DATA_CHANGE: "PERSONAL_DATA_CHANGE",
   OPTIONS_SUBMITTED: "OPTIONS_SUBMITTED",
   REQUEST_COMPLETED: "REQUEST_COMPLETED",
+  REQUEST_FAILED: "REQUEST_FAILED",
   PREVIOUS_STAGE_SELECTED: "PREVIOUS_STAGE_SELECTED"
 };
 
@@ -61,7 +62,8 @@ export const stages = {
   BODY_SUBLOCATION: "BODY_SUBLOCATION",
   SUBLOCATION_SYMPTOMS: "SUBLOCATION_SYMPTOMS",
   ADDITIONAL_SYMPTOMS: "ADDITIONAL_SYMPTOMS",
-  DIAGNOSES: "DIAGNOSES"
+  DIAGNOSES: "DIAGNOSES",
+  REQUEST_FAILED: "REQUEST_FAILED"
 };
 
 export const stagesKeys = [
@@ -70,7 +72,8 @@ export const stagesKeys = [
   "BODY_SUBLOCATION",
   "SUBLOCATION_SYMPTOMS",
   "ADDITIONAL_SYMPTOMS",
-  "DIAGNOSES"
+  "DIAGNOSES",
+  "REQUEST_FAILED"
 ];
 
 const initialState = {
@@ -124,6 +127,13 @@ export const reducer = (state = initialState, action) => {
         isFetching: false,
         stage: nextStage,
         medicalInfo: medicalInfo
+      };
+    }
+    case actionTypes.REQUEST_FAILED: {
+      return {
+        ...state,
+        isFetching: false,
+        stage: stages.REQUEST_FAILED
       };
     }
     case actionTypes.PREVIOUS_STAGE_SELECTED: {
