@@ -132,7 +132,7 @@ export default class App extends React.Component {
           <Text style={styles.error}> We're sorry. Something went wrong. Please try again later. </Text>
         </View>
       );
-    } else if (stage == stages.DIAGNOSIS) {
+    } else if (stage == stages.DIAGNOSES) {
       mainComponent = (
         <List prompt={this.getPrompt()} items={this.getCheckboxFormOptions()} />
       );

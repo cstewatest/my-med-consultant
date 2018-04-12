@@ -7,7 +7,7 @@ import {
 import moment from "moment";
 
 export default class Requester {
-  BASE_URL = "http://ec2-54-227-226-211.compute-1.amazonaws.com/";
+  BASE_URL = "http://ec2-52-70-33-38.compute-1.amazonaws.com/";
 
   constructor(gender, birthYear) {
     this.gender = gender;
