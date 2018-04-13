@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 const Navigation = props => {
-  return <Text style={styles.title}> UNJANI </Text>;
+  return <Text style={styles.title}> MyMedConsultant </Text>;
 };
 
 export default Navigation;
