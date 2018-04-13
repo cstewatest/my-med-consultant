@@ -28,6 +28,8 @@ export default class List extends React.Component {
   };
 
   render() {
+    const showError = this.props.items.length == 0 ;
+    const errorText = "Could not find potential diagnoses. Please ensure you have selected every symptom you are experiencing."
     return (
       <View style={styles.container}>
         <Icon
@@ -36,7 +38,9 @@ export default class List extends React.Component {
           ios="ios-medkit"
           md="md-medkit"
         />
-        <Text style={styles.prompt}> {this.props.prompt} </Text>
+        <Text style={styles.prompt}> 
+         { showError ? errorText : this.props.prompt }
+        </Text>
         <FlatList
           data={this.state.formattedItems}
           renderItem={this.renderItem}
