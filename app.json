@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "test-project",
-    "description": "An empty new project",
-    "slug": "test-project",
+    "name": "My Med Consultant",
+
+    "description": "Check what your medical symptoms may mean for you.",
+    "slug": "my-med-consultant",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "version": "1.0.0",
@@ -16,7 +17,11 @@
       "assetExts": ["ttf", "mp4"]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.christinastewartcorp.mymedconsultant"
+    },
+    "android": {
+      "package": "com.christinastewartcorp.mymedconsultant"
     }
   }
 }
