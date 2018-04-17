@@ -57,6 +57,9 @@ export default class PersonalDataForm extends React.Component {
           value={defaultPersonalData}
           ref={c => (this._form = c)}
         />
+        <Text style={localStyles.disclaimer}> 
+          In proceeding, I understand that the following is merely medical information and not medical advice. I understand that no liability will accrue to the website owner in the event that I suffer loss as a result of reliance upon this information. 
+        </Text>
         <TouchableOpacity style={styles.button} onPress={this.onFormSubmit}>
           <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableOpacity>
@@ -64,3 +67,12 @@ export default class PersonalDataForm extends React.Component {
     );
   }
 }
+
+const localStyles = {
+  disclaimer: {
+    color: '#ffffff',
+    marginTop: 10,
+    marginBottom: 10,
+    fontFamily: "open-sans-regular"
+  }
+};

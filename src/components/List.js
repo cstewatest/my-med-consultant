@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Text, StyleSheet, View } from "react-native";
+import { FlatList, Text, StyleSheet, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default class List extends React.Component {
@@ -31,7 +31,7 @@ export default class List extends React.Component {
     const showError = this.props.items.length == 0 ;
     const errorText = "Could not find potential diagnoses. Please ensure you have selected every symptom you are experiencing."
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Icon
           style={styles.icon}
           name="ios-medkit"
@@ -46,7 +46,7 @@ export default class List extends React.Component {
           renderItem={this.renderItem}
           keyExtractor={this.extractKey}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -13,7 +13,8 @@ import {
   actionTypes,
   stages,
   stagesKeys,
-  prompts
+  prompts,
+  redFlagIDs
 } from "./src/reducers/unjaniRedux";
 
 import Requester from "./src/services/Requester";
@@ -23,6 +24,7 @@ import List from "./src/components/List";
 import Navigation from "./src/components/Navigation";
 import MainImage from "./src/components/MainImage";
 import MedicalInfo from "./src/components/MedicalInfo";
+import RedFlagWarning from "./src/components/RedFlagWarning";
 
 import { Font } from "expo";
 
@@ -105,6 +107,14 @@ export default class App extends React.Component {
     requester.get();
   };
 
+  selectedRedFlagSymptomIDs() {
+    const { medicalInfo } = this.state;
+    const selectedSymptomIDs = medicalInfo[stages.SUBLOCATION_SYMPTOMS] && medicalInfo[stages.SUBLOCATION_SYMPTOMS].selected || []
+    const selectedAdditionalSymptomIDs = medicalInfo[stages.ADDITIONAL_SYMPTOMS] && medicalInfo[stages.ADDITIONAL_SYMPTOMS].selected || []
+    const allIDs = selectedSymptomIDs.concat(selectedAdditionalSymptomIDs);
+    return (allIDs.filter(x => redFlagIDs.includes(x)))
+  }
+
   render() {
     const { stage, isFetching, fontsAreLoaded } = this.state;
 
@@ -147,6 +157,11 @@ export default class App extends React.Component {
       );
     }
 
+    let redFlagComponent;
+    if (this.selectedRedFlagSymptomIDs().length > 0) {
+      redFlagComponent = <RedFlagWarning symptomIDs={this.selectedRedFlagSymptomIDs()} />
+    }
+
     return (
       <View style={styles.container}>
         <Navigation />
@@ -159,6 +174,7 @@ export default class App extends React.Component {
           itemObjs={this.getExistingMedicalInfo()}
           onItemSelection={this.onBreadcrumbSelection}
         />
+        {redFlagComponent}
         {isFetching ? (
           <ActivityIndicator
             style={styles.activityIndicator}

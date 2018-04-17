@@ -27,6 +27,45 @@ const POTENTIAL_BODY_LOCATIONS = [
   }
 ];
 
+export const redFlagIDs = [ 
+  17, 29, 31, 43, 57, 66, 98, 128, 144, 181, 207, 233, 241, 287, 972, 984, 986, 988, 991 
+]
+
+export const redFlagIDsNames = {
+  17: "Chest pain", 
+  29: "Shortness of breath", 
+  31: "Chest tightness",
+  43: "Drowsiness", 
+  57: "Going black before the eyes", 
+  66: "Visual field loss", 
+  98: "Difficulty in speaking", 
+  128: "Disorientation regarding time or place", 
+  144: "Unconsciousness, short", 
+  181: "Vomiting blood", 
+  207: "Dizziness", 
+  233: "Bloody cough", 
+  241: "Sleepiness with spontaneous falling asleep", 
+  287: "Eye pain", 
+  972: "Weakness or numbness on right or left side of body", 
+  984: "Absence of a pulse", 
+  986: "Irregular heartbeat", 
+  988: "Trouble understanding speech", 
+  991: "Blue colored skin"
+}
+
+const formattedSymptomIDsNames = {
+  188: "Pain when pressing on abdomen", 
+  228: "Cough with sputum (mucus)",
+  989: "Distended (swollen) abdomen",
+  92: "Early satiety (feeling full after a small amount of food)",
+  194: "Joint effusion (fluid in or around a joint)",
+  37: "Palpitations (fast, strong or irregular heartbeat)",
+  34: "Skin wheal (skin patch that's elevated, discolored & often itches)",
+  64: "Sputum (mucus/phlegm)",
+  144: "Brief unconsciousness or fainting", 
+  191: "Pain when removing pressure that has been applied to the abdomen"
+}
+
 export const noneOption = {
   ID: -1,
   Name: "None"
@@ -117,9 +156,17 @@ export const reducer = (state = initialState, action) => {
       const medicalInfo = state.medicalInfo;
       const nextStageIndex = stagesKeys.indexOf(state.stage) + 1;
       const nextStage = stagesKeys[nextStageIndex];
-      const potential = payload.potential;
+      let potential = payload.potential;
       if (nextStage == stages.ADDITIONAL_SYMPTOMS) {
         potential.push(noneOption);
+      }
+      if (nextStage == stages.ADDITIONAL_SYMPTOMS || nextStage == stages.SUBLOCATION_SYMPTOMS) {
+        potential = potential.map(symptomObj =>{
+          if (formattedSymptomIDsNames[symptomObj.ID]) {
+            symptomObj['Name'] = formattedSymptomIDsNames[symptomObj.ID]
+          }
+          return(symptomObj)
+        })
       }
       medicalInfo[nextStage] = { potential: potential, selected: [] };
       return {
