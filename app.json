@@ -1,14 +1,14 @@
 {
   "expo": {
     "name": "My Med Consultant",
-
+    "icon": "./assets/icons/iTunesArtwork1024px.png",
     "description": "Check what your medical symptoms may mean for you.",
     "slug": "my-med-consultant",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
+    "primaryColor": "#1e90ff",
     "loading": {
       "icon": "./assets/icons/loading-icon.png",
       "hideExponentText": false
@@ -21,7 +21,8 @@
       "bundleIdentifier": "com.christinastewartcorp.mymedconsultant"
     },
     "android": {
-      "package": "com.christinastewartcorp.mymedconsultant"
+      "package": "com.christinastewartcorp.mymedconsultant",
+      "versionCode": 1
     }
   }
 }
