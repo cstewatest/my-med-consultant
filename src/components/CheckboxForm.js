@@ -62,7 +62,7 @@ export default class CheckboxForm extends React.Component {
     const symptomsForForm = t.struct(symptomsByID);
 
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={localStyles.form}>
         <Text style={styles.prompt}>{prompt}</Text>
         <Text style={localStyles.error}> {this.state.error} </Text>
         <Form
@@ -73,12 +73,17 @@ export default class CheckboxForm extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.onFormSubmit}>
           <Text style={styles.buttonText}>SUBMIT</Text>
         </TouchableOpacity>
+        <View style={styles.whiteSpace}>
+        </View>
       </ScrollView>
     );
   }
 }
 
 const localStyles = {
+  form: {
+    padding: 20
+  },
   error: {
     alignSelf: "center",
     color: "#ff7043"

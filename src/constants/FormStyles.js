@@ -7,6 +7,9 @@ export default (styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 20
   },
+  whiteSpace: {
+    height: 35
+  },
   container: {
     padding: 20
   },

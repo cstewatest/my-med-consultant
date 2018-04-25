@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Text, StyleSheet, ScrollView } from "react-native";
+import { FlatList, Text, StyleSheet, ScrollView, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default class List extends React.Component {
@@ -21,7 +21,7 @@ export default class List extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <Text style={styles.row}>
+      <Text style={localStyles.row}>
         {item.Name}: {item.Accuracy}% Chance
       </Text>
     );
@@ -31,14 +31,14 @@ export default class List extends React.Component {
     const showError = this.props.items.length == 0 ;
     const errorText = "Could not find potential diagnoses. Please ensure you have selected every symptom you are experiencing."
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={localStyles.container}>
         <Icon
-          style={styles.icon}
+          style={localStyles.icon}
           name="ios-medkit"
           ios="ios-medkit"
           md="md-medkit"
         />
-        <Text style={styles.prompt}> 
+        <Text style={localStyles.prompt}> 
          { showError ? errorText : this.props.prompt }
         </Text>
         <FlatList
@@ -46,12 +46,14 @@ export default class List extends React.Component {
           renderItem={this.renderItem}
           keyExtractor={this.extractKey}
         />
+        <View style={styles.whiteSpace}>
+        </View>
       </ScrollView>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   row: {
     padding: 5,
     marginBottom: 2,
