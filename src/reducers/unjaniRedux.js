@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import Requester from "../services/Requester";
 
 const POTENTIAL_BODY_LOCATIONS = [
   {
@@ -131,6 +132,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         gender: payload.gender,
         birthYear: payload.birthYear,
+        requester: new Requester(payload.gender, payload.birthYear),
         stage: stages.BODY_LOCATION
       };
     }

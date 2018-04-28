@@ -17,7 +17,6 @@ import {
   redFlagIDs
 } from "./src/reducers/unjaniRedux";
 
-import Requester from "./src/services/Requester";
 import PersonalDataForm from "./src/components/PersonalDataForm";
 import CheckboxForm from "./src/components/CheckboxForm";
 import List from "./src/components/List";
@@ -102,9 +101,7 @@ export default class App extends React.Component {
       type: actionTypes.OPTIONS_SUBMITTED,
       payload: { selected: selectedIDs }
     });
-    // make this the same requester throughout the code. no need to reinstantiate
-    let requester = new Requester(this.state.gender, this.state.birthYear);
-    requester.get();
+    this.state.requester && this.state.requester.get();
   };
 
   selectedRedFlagSymptomIDs() {
