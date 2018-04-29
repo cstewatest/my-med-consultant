@@ -5,11 +5,12 @@ import {
   store,
   actionTypes
 } from "../reducers/diagnosisInfoRedux";
+import ListItem from "./ListItem"
 
 export default class List extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = { formattedItems: [] };
   }
 
@@ -42,17 +43,12 @@ export default class List extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <View>
-        <Text style={localStyles.row}>
-          {item.Name}: {item.Accuracy}% Chance
-        </Text>
-        <TouchableOpacity onPress={() => this.handleSelection(item.ID)}>
-          <Text> More Info </Text>
-        </TouchableOpacity>
-        <Text> {this.state.diagnosisIDsInfo[item.ID]} </Text>
-      </View>
+      <ListItem
+        item = {item}
+        onPress = {() => this.handleSelection(item.ID)}
+      />
     );
-  };
+  };  
 
   render() {
     const showError = this.props.items.length == 0 ;
@@ -66,6 +62,7 @@ export default class List extends React.Component {
           md="md-medkit"
         />
         <Text style={localStyles.prompt}> 
+          {this.state.diagnosisIDsInfo[this.state.requestedID] && this.state.diagnosisIDsInfo[this.state.requestedID].Description}
          { showError ? errorText : this.props.prompt }
         </Text>
         <FlatList
@@ -81,12 +78,6 @@ export default class List extends React.Component {
 }
 
 const localStyles = StyleSheet.create({
-  row: {
-    padding: 5,
-    marginBottom: 2,
-    fontFamily: "open-sans-bold",
-    color: "#ffffff"
-  },
   prompt: {
     fontSize: 15,
     fontFamily: "open-sans-bold",

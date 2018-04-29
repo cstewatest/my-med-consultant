@@ -2,14 +2,14 @@ import {
   store,
   actionTypes,
 } from "../../reducers/diagnosisInfoRedux";
-import Requester from "../Requester"
+import { makeRequest, baseURL } from "../RequestMaker"
 
-export default class DiagnosisInfoRequester extends Requester {
+export default class DiagnosisInfoRequester {
   get() {
     const { requestedID } = store.getState();
 
-    const fullURL = this.BASE_URL + "diagnosis_info?diagnosisID=" + requestedID;
+    const fullURL = baseURL + "diagnosis_info?diagnosisID=" + requestedID;
 
-    return this.makeRequest(fullURL);
+    return(makeRequest(fullURL, store, actionTypes));
   }
 }

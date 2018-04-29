@@ -36,6 +36,15 @@ export const reducer = (state = initialState, action) => {
         diagnosisIDsInfo: diagnosisIDsInfo
       };
     }
+    case actionTypes.REQUEST_FAILED: {
+      return {
+        ...state, 
+        isFetching: false,
+        ugh: "failed"
+      }
+    }
   }
+
+  return state;
 };
 export const store = createStore(reducer);
