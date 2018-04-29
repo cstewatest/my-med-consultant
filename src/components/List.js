@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Text, StyleSheet, ScrollView, View, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Modal, TouchableHighlight, FlatList, Text, StyleSheet, ScrollView, View, TouchableOpacity,  } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
   store,
@@ -11,7 +11,7 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = { formattedItems: [] };
+    this.state = { formattedItems: [], modalVisible: false };
   }
 
   componentWillMount() {
@@ -38,6 +38,7 @@ export default class List extends React.Component {
       type: actionTypes.INFO_REQUESTED,
       payload: { requestedID: ID }
     });
+    this.setModalVisible(true);
     this.state.requester && this.state.requester.get();
   }
 
@@ -50,11 +51,42 @@ export default class List extends React.Component {
     );
   };  
 
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   render() {
     const showError = this.props.items.length == 0 ;
     const errorText = "Could not find potential diagnoses. Please ensure you have selected every symptom you are experiencing."
+    let modalText; 
+    if (this.state.requestFailed) {
+      modalText = "We're sorry. Something went wrong. Please try again later."
+    } else if (this.state.diagnosisIDsInfo[this.state.requestedID]) {
+      modalText = this.state.diagnosisIDsInfo[this.state.requestedID].Description
+    }
+    const modalTextComponent = <Text> {modalText} </Text>
+    const activityIndicator =
+       <ActivityIndicator
+          size="large"
+          color="#ffffff"
+          animating={true}
+        />    
     return (
       <ScrollView style={localStyles.container}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}>
+          <View style={{marginTop: 22}}>
+            {this.state.isFetching ? activityIndicator : modalTextComponent}
+            <TouchableHighlight
+              onPress={() => {
+                this.setModalVisible(!this.state.modalVisible);
+              }}>
+              <Text>Close</Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
         <Icon
           style={localStyles.icon}
           name="ios-medkit"
@@ -62,7 +94,6 @@ export default class List extends React.Component {
           md="md-medkit"
         />
         <Text style={localStyles.prompt}> 
-          {this.state.diagnosisIDsInfo[this.state.requestedID] && this.state.diagnosisIDsInfo[this.state.requestedID].Description}
          { showError ? errorText : this.props.prompt }
         </Text>
         <FlatList

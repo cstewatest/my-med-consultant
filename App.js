@@ -15,7 +15,7 @@ import {
   stagesKeys,
   prompts,
   redFlagIDs
-} from "./src/reducers/unjaniRedux";
+} from "./src/reducers/mainRedux";
 
 import PersonalDataForm from "./src/components/PersonalDataForm";
 import CheckboxForm from "./src/components/CheckboxForm";

@@ -3,7 +3,7 @@ import {
   actionTypes,
   stages,
   noneOption
-} from "../../reducers/unjaniRedux";
+} from "../../reducers/mainRedux";
 import moment from "moment";
 import { makeRequest, baseURL } from "../RequestMaker"
 

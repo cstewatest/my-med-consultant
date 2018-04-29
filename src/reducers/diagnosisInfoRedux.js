@@ -5,7 +5,8 @@ const initialState = {
   isFetching: false,
   requestedID: -1,
   diagnosisIDsInfo: [],
-  requester: new DiagnosisInfoRequester()
+  requester: new DiagnosisInfoRequester(),
+  requestFailed: false
 };
 
 export const actionTypes = {
@@ -23,7 +24,8 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
-        requestedID: requestedID
+        requestedID: requestedID,
+        requestFailed: false
       }
     }
     case actionTypes.REQUEST_COMPLETED: {
@@ -33,14 +35,15 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        diagnosisIDsInfo: diagnosisIDsInfo
+        diagnosisIDsInfo: diagnosisIDsInfo,
+        requestFailed: false
       };
     }
     case actionTypes.REQUEST_FAILED: {
       return {
         ...state, 
         isFetching: false,
-        ugh: "failed"
+        requestFailed: true
       }
     }
   }
