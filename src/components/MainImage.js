@@ -5,7 +5,7 @@ const MainImage = props => {
   return (
     <Image
       style={styles.image}
-      source={require("../../assets/images/doctor.jpg")}
+      source={require("../../assets/images/homepage.png")}
     />
   );
 };
@@ -15,6 +15,6 @@ export default MainImage;
 const styles = StyleSheet.create({
   image: {
     resizeMode: "cover",
-    width: 400
+    height: 100
   }
 });
