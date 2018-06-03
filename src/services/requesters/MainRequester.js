@@ -3,12 +3,11 @@ import {
   actionTypes,
   stages,
   noneOption
-} from "../reducers/unjaniRedux";
+} from "../../reducers/mainRedux";
 import moment from "moment";
+import { makeRequest, baseURL } from "../RequestMaker"
 
-export default class Requester {
-  BASE_URL = "http://ec2-52-70-33-38.compute-1.amazonaws.com/";
-
+export default class MainRequester {
   constructor(gender, birthYear) {
     this.gender = gender;
     this.birthYear = birthYear;
@@ -24,7 +23,7 @@ export default class Requester {
             stages.BODY_LOCATION,
             medicalInfo
           );
-          return this.BASE_URL + "sublocations?locationID=" + locationID;
+          return baseURL + "sublocations?locationID=" + locationID;
         }
         case stages.BODY_SUBLOCATION: {
           const locationID = this.getLocationID(
@@ -33,7 +32,7 @@ export default class Requester {
           );
           const mwbg = this.getMwbg();
           return (
-            this.BASE_URL +
+            baseURL +
             "sublocation_symptoms?locationID=" +
             locationID +
             "&mwbg=" +
@@ -46,7 +45,7 @@ export default class Requester {
             medicalInfo
           );
           return (
-            this.BASE_URL +
+            baseURL +
             "additional_symptoms?symptoms=" +
             JSON.stringify(locationIDs) +
             "&gender=" +
@@ -70,7 +69,7 @@ export default class Requester {
           }
           const allLocationIDs = symptomLocationIDs.concat(locationIDs);
           return (
-            this.BASE_URL +
+            baseURL +
             "diagnosis?symptoms=" +
             JSON.stringify(allLocationIDs) +
             "&gender=" +
@@ -82,7 +81,7 @@ export default class Requester {
       }
     };
 
-    return this.makeRequest(fullURL());
+    return makeRequest(fullURL(), store, actionTypes);
   }
 
   getLocationID(stage, medicalInfo) {
@@ -106,31 +105,5 @@ export default class Requester {
         return isOverEleven ? "man" : "boy";
       }
     }
-  }
-
-  makeRequest(url) {
-    const request = new XMLHttpRequest();
-    request.onreadystatechange = e => {
-      if (request.readyState !== 4) {
-        return;
-      }
-
-      if (request.status === 200) {
-        const result = request.response;
-        store.dispatch({
-          type: actionTypes.REQUEST_COMPLETED,
-          payload: { potential: eval(result) }
-        });
-      } else {
-        store.dispatch({
-          type: actionTypes.REQUEST_FAILED
-        });
-        console.log(request.status);
-        console.log(request.response);
-      }
-    };
-
-    request.open("GET", url);
-    request.send();
   }
 }
